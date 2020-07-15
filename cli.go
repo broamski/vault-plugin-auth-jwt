@@ -125,6 +125,7 @@ func callbackHandler(c *api.Client, mount string, clientNonce string, doneCh cha
 		}()
 
 		if req.FormValue("error") != "" || req.FormValue("error_description") != "" {
+			err = fmt.Errorf("Authenication Error: %s %s", req.FormValue("error"), req.FormValue("error_description"))
 			response = errorHTML(req.FormValue("error"), req.FormValue("error_description"))
 			return
 		}
