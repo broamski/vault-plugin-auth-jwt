@@ -124,6 +124,12 @@ func callbackHandler(c *api.Client, mount string, clientNonce string, doneCh cha
 			doneCh <- loginResp{secret, err}
 		}()
 
+		if req.FormValue("error") != "" || req.FormValue("error_description") != "" {
+			// summary, detail := parseError(err)
+			response = errorHTML(req.FormValue("error"), req.FormValue("error_description"))
+			return
+		}
+
 		// Pull any parameters from either the body or query parameters.
 		// FormValue prioritizes body values, if found.
 		data := map[string][]string{
